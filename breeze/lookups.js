@@ -1,29 +1,29 @@
 import {createEntityManager} from './entity-manager-factory';
-
-var customersQuery = new breeze.EntityQuery
-  .from('Customers')
-  .select('CustomerID, CompanyName')
-  .orderBy('CompanyName');
-
-var productsQuery = new breeze.EntityQuery
-  .from('Products')
-  .select('ProductID, ProductName, UnitPrice')
-  .orderBy('ProductName');
+import lookupQueries from './queries';
 
 /**
 * Manages the application's shared lookups.
 * Eagerly loading the lookups because there are only two.
 */
-export class Lookups {
-  customers;
-  products;
+export class Lookups {  
+  get queries() {
+    let res = [];
+    lookupQueries.forEach(query => {
+      res[query.name] =em.executeQuery(query) 
+    });
+    return res;
+  }
 
   load() {
+    let queries = this.queries;
     return createEntityManager()
-      .then(em => Promise.all([em.executeQuery(customersQuery), em.executeQuery(productsQuery)]))
+      .then(em => Promise.all(queries.values))
       .then(queryResults => {
-        this.customers = queryResults[0].results;
-        this.products = queryResults[1].results;
+        for (let res, index of queryResults) {
+          let key = queries[index];
+          this.results = this.results || {};
+          this.results[key] = queryResults[index].results;
+        }        
       })
   }
 }

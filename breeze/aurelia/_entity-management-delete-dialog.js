@@ -1,4 +1,4 @@
-export default class <%= entityAngularJSName %>Delete {
+export default class <%= entityClass %>Delete {
 
     clear () {
     }

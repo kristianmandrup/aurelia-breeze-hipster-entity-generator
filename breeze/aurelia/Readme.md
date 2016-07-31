@@ -10,21 +10,34 @@ Will be vastly simplified, since mostly Breeze will take care of field updates, 
 
 We should instead use Breeze.js as our state manager! Much better and simpler :)
 
+## Angular 1 -> Aurelia
+
+See [angular-1-x-concepts-in-aurelia](http://ilikekillnerds.com/2015/10/angular-1-x-concepts-in-aurelia/)
+
+- `ng-click` -> `click.bind`
+- `ng-change` -> `change.bind`
+- `ng-model` -> `value.two-way`
+- `ng-src` -> `src.bind` 
+- `ng-if` -> `if.bind`
+
+Also see [working-with-forms-in-aurelia](http://ilikekillnerds.com/2015/10/working-with-forms-in-aurelia/) for more on Aurelia forms!
+
 ## Variables availables in entity templates
 
 - `entityInstance`
 - `entityStateName`
 - `entityUrl`
-- `angularAppName`
+- `clientAppName`
 - `entityTranslationKey`
 - `entityFolderName`
 - `entityPluralFileName`
-- `entityAngularJSName`
+- `entityClientName`
 - `keyPrefix`
 - `entityClassHumanized`
 - `entityClass`
 - ...
 
+See `loadInMemoryData` in `index.js` (generator) for the full list of variables available in Templates.
 
 ## Fields
 
@@ -32,6 +45,41 @@ See the `.html` files. Looks like there is a `fields` array available!
 
 - `differentTypes[idx]`
 - `fields` (Array og field definition Objects)
+
+```js
+entityClass
+entityClassHumanized
+entityClassPlural
+entityClassPluralHumanized
+entityInstance
+entityInstancePlural
+entityApiUrl
+entityFolderName
+entityFileName
+entityPluralFileName
+entityServiceFileName
+entityClientName
+entityStateName
+entityUrl
+entityTranslationKey
+entityTranslationKeyMenu
+
+fieldsContainZonedDateTime = false;
+fieldsContainLocalDate = false;
+fieldsContainBigDecimal = false;
+fieldsContainBlob = false;
+validation = false;
+fieldsContainOwnerManyToMany = false;
+fieldsContainNoOwnerOneToOne = false;
+fieldsContainOwnerOneToOne = false;
+fieldsContainOneToMany = false;
+fieldsContainManyToOne = false;
+differentTypes = [entityClass];
+if (!relationships) {
+    relationships = [];
+}
+```            
+
 
 ```
 for (idx in fields)
