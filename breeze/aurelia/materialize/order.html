@@ -1,0 +1,43 @@
+<template>
+  <div class="container">
+    <form submit.delegate="save()" novalidate>
+      <!-- header -->
+      <compose view="../entity-header.html"></compose>
+
+      <!-- order fields -->
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <select value.bind="entity.<%= entityPrimaryKeyName %>" materialize="select">
+            <option value="">Select a <%= entityName %></option>
+            <option repeat.for="<%= entityName %> of <%= entityNamePlural %>" value.bind="<%= entityName %>.<%= entityPrimaryKeyName %>">${<%= entityName %>.CompanyName}</option>
+          </select>
+          <label for="<%= entityClassName %>"><%= entityClassName %></label>
+        </div>
+        <%_ for (idx in fields) {
+            var fieldName = fields[idx].fieldName;
+            var fieldType = fields[idx].fieldType;
+            var fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>
+            <%_ if (fields[idx].fieldIsEnum) { _%>
+
+            <%_ } else if ((fieldType === 'byte[]' || fieldType === 'ByteBuffer') && fieldTypeBlobContent == 'image') { _%>
+            <%_ } else if (fieldType == 'ZonedDateTime' || fieldType == 'LocalDate') { _%>
+            <!-- date field: default -->
+              <div class="input-field col s12 m3">
+                <input id="<%= fieldName %>" type="text" materialize="datepicker" value.bind="entity.<%= fieldName %> | dateFormat:'M/D/YYYY'">
+                <label for="<%= fieldName %>" materialize><%= fieldName %></label>
+              </div>
+            <%_ } else { _%>
+              <!-- text field: default -->
+              <div class="input-field col s12 m5">
+                <input id="<%= fieldName %>" type="text" value.bind="entity.<%= fieldName %>">
+                <label for="<%= fieldName %>" materialize><%= fieldName %></label>
+              </div>
+            <%_ } _%>
+    
+        <%_ } _%>
+      </div>
+      <!-- order details grid -->
+      <compose model.bind="entity" view-model="<%= entityNamePlural %>/<%= entityName %>-details"></compose>
+    </form>
+  </div>
+</template>

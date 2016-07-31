@@ -1,0 +1,22 @@
+<template>
+  <div id="detail" class="modal">
+    <div class="modal-content">
+      <h4><%= entityName %> Detail</h4>
+      <div class="row">
+        <div class="input-field col s8">
+          TODO: Select box for each referenced entity (see relationships)
+          <!--          
+          <select value.bind="detail.ProductID" id="Product" materialize="select">
+            <option model.bind="0">Select a product</option>
+            <option repeat.for="product of products" model.bind="product.ProductID">${product.ProductName}</option>
+          </select>
+          <label for="Product">Product</label>
+          -->
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" click.delegate="closeDetail" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+    </div>
+  </div>
+</template>

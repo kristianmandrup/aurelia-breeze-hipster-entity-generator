@@ -1,0 +1,61 @@
+<template>
+  <div class="container">
+
+    <h3 class="left"><%= entityNamePlural %></h3>
+    <a href="#orders/new" class="waves-effect waves-light btn right header-button">New</a>
+
+    <table class="bordered hoverable table-responsive">
+      <thead>
+        <tr>
+          <th><%= entityName %> #</th>
+          <%_ for (idx in fields) {
+            var fieldName = fields[idx].fieldName; _%>          
+          <th><%= fieldName %></th>
+          <%_ } _%>
+        </tr>
+      </thead>
+      <tbody class="cursor-pointer">
+        <tr repeat.for="entity of entities" click.delegate="$parent.open(entity.<%= entityPrimaryKey %>)">
+          <td>${ entity.<%= entityPrimaryKey %>}</td>
+          <%_ for (idx in fields) {
+            var fieldName = fields[idx].fieldName; _%> 
+            <%_ if (fields[idx].fieldIsEnum) { _%>
+
+            <%_ } else if ((fieldType === 'byte[]' || fieldType === 'ByteBuffer') && fieldTypeBlobContent == 'image') { _%>
+
+            <%_ } else if (fieldType == 'ZonedDateTime' || fieldType == 'LocalDate') { _%>                               
+          <td>${ entity[fieldName] | dateFormat:'M/D/YYYY' }</td>
+          <%_ } else { _%>
+          <td>${ entity[fieldName] }</td>
+          <%_ } _%>
+
+          <%_ for (idx in relationships) {
+                  var relationshipType = relationships[idx].relationshipType;
+                  var ownerSide = relationships[idx].ownerSide;
+                  var relationshipFieldName = relationships[idx].relationshipFieldName;
+                  var relationshipFieldNamePlural = relationships[idx].relationshipFieldNamePlural;
+                  var otherEntityName = relationships[idx].otherEntityName;
+                  var otherEntityStateName = relationships[idx].otherEntityStateName;
+                  var otherEntityField = relationships[idx].otherEntityField;
+                  var otherEntityFieldCapitalized = relationships[idx].otherEntityFieldCapitalized; _%>
+              <%_ if (relationshipType == 'many-to-one'
+                      || (relationshipType == 'one-to-one' && ownerSide == true)
+                      || (relationshipType == 'many-to-many' && ownerSide == true && pagination == 'no')) { _%>
+
+          TODO: show fields for relationships
+          <%_ } _%>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="progress" show.bind="isLoading">
+      <div class="indeterminate"></div>
+    </div>
+
+    <pager page-count.bind="pageCount"
+           page-index.bind="pageIndex"
+           set-page.call="setPage($event)">
+    </pager>
+
+  </div>
+</template>

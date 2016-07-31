@@ -1,0 +1,36 @@
+<template>
+  <!-- header -->
+  <div class="row">
+    <h4 class="left">Items</h4>
+    <button type="button" click.delegate="addDetail()" class="right waves-effect waves-light btn header-button">
+      Add
+    </button>
+  </div>
+
+  <!-- grid -->
+  <table class="bordered hoverable table-responsive">
+    <thead>
+      <tr>
+        <th></th>
+        <%_ for (idx in fields) {
+            var fieldName = fields[idx].fieldName;
+            var fieldType = fields[idx].fieldType;
+            var fieldTypeBlobContent = fields[idx].fieldTypeBlobContent; _%>        
+        <th><%= fieldName %></th>
+        <%_ } _%>
+      </tr>
+    </thead>
+    <tbody class="cursor-pointer">
+      <tr repeat.for="detail of order<%= entityNamePlural %>.details" click.delegate="$parent.editDetail(detail)">
+        <td click.delegate="$parent.removeDetail(detail)">
+          <i class="mdi-navigation-close red-text darken-4" />
+        </td>
+        <td>${ $parent.index[detail.id].name}</td>
+        <%_ for (idx in fields) {
+            var fieldName = fields[idx].fieldName; _%> 
+        <td>${ detail[fieldName] }</td>
+        <%_ } _%>
+      </tr>
+    </tbody>
+  </table>
+</template>
